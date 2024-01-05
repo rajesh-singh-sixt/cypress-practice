@@ -1,6 +1,12 @@
+import 'cypress-file-upload';
 describe('cypress test', () => {
 
-  it('TC001 - Verify title', () => {
+  before(() => {
+    cy.log('******** before all hook *******')
+  }
+  )
+
+  xit('TC001 - Verify title', () => {
     cy.visit("https://opensource-demo.orangehrmlive.com/")
     cy.url().should('include', 'orangehrmlive')
       .and('contain', 'orange')
@@ -10,7 +16,7 @@ describe('cypress test', () => {
   }
   )
 
-  it('TC002 - Identify locators', () => {
+  xit('TC002 - Identify locators', () => {
     cy.visit("https://rahulshettyacademy.com/AutomationPractice/")
     cy.get("input[value='radio2']").should('be.visible')
     cy.get("input[value='radio2']").check().should('be.checked')
@@ -35,7 +41,7 @@ describe('cypress test', () => {
   }
   )
 
-  it('TC003 - Handle tables', () => {
+  xit('TC003 - Handle tables', () => {
     cy.visit("https://rahulshettyacademy.com/AutomationPractice/")
     cy.get("table.table-display>tbody>tr").should('have.length', '11')
     cy.get("table.table-display>tbody>tr>th").should('have.length', '3')
@@ -53,11 +59,44 @@ describe('cypress test', () => {
       })
   })
 
-  it.only('TC003 - Handle tables', () => {
+  xit('TC004 - Mouse hover', () => {
     cy.visit("https://rahulshettyacademy.com/AutomationPractice/")
-    cy.get("#mousehover").trigger('mouseover').click()
-    cy.get("a[href='#top']").should('be.visibile') 
+    cy.get("#mousehover").realHover('mouse')
+    cy.get("a[href='#top']").should('be.visible')
+  })
 
+  xit('TC005 = File upload', () => {
+    cy.visit('https://the-internet.herokuapp.com/upload');
+    cy.get('#file-upload').attachFile({ filePath: 'file1.txt', fileName: 'myfile1.txt' });
+    cy.get('#file-submit').click();
+    cy.wait(5000);
+    cy.get("div[class='example'] h3").should('have.text', 'File Uploaded!')
+  })
+
+  it('TC001',() => {
+    cy.log('first test case')
+  })
+
+  it.skip('TC002',() => {
+    cy.log('second test case')
+  })
+
+  it('TC003',() => {
+    cy.log('third test case')
+  })
+
+  after(() => {
+    cy.log('********* after all hook ***********')
+  }
+  )
+
+  afterEach(() => {
+    cy.log('*********** after each hook ***********')
+  }
+  )
+
+  beforeEach(() => {
+    cy.log('******** before each hook *******')
   }
   )
 
